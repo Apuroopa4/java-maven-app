@@ -14,3 +14,4 @@ set +x
 
 set -x
 java -jar target/${NAME}-${VERSION}.jar
+my-app-1.0-SNAPSHOT.jar
