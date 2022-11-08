@@ -13,5 +13,4 @@ VERSION=`mvn help:evaluate -Dexpression=project.version | grep "^[^\[]"`
 set +x
 
 set -x
-java -jar target/${NAME}-${VERSION}.jar
-my-app-1.0-SNAPSHOT.jar
+java -jar target/my-app-1.0-SNAPSHOT.jar
