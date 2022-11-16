@@ -1,47 +1,26 @@
 
-pipeline{
-     	  agent
-    		{
-    		 label "slave"
-		}
-    tools{
-    	 	maven "m1"
-    	}
-    stages {
-        
-        stage('clone') {
-            steps{
-            git 'https://github.com/Apuroopa4/Amazon123.git'
-        }
-        }
-        stage('build') {
+
+pipeline {
+	agent any
+	tools {
+        maven 'm1' 
+    }
+	stages {
+		stage('Build') {
 			steps {
-			  sh 'mvn -f /var/lib/jenkins/workspace/pipeline_amazon/Amazon/pom.xml -DskipTests clean install'
-				
+				sh 'mvn -B -DskipTests clean install'
 			}
 		}
 		stage('Test') {
 			steps {
-			   sh 'mvn -f /var/lib/jenkins/workspace/pipeline_amazon/Amazon/pom.xml test'
+				sh 'mvn test'
 			}
 			post {
 				always {
-					junit '**/target/surefire-reports/*.xml'
+					junit 'target/surefire-reports/*.xml'
 				}
-		
-	    	}
-		}
-        stage('deploy') {
-			steps {
-			           sh 'cp Amazon/Amazon-Web/target/*.war /var/opt/tomcat/webapps'
-
 			}
-        }
+		}
+		
 	}
-    post {
-    always
-    {
-    echo 'finished'
-    deleteDir()
 }
-    }
